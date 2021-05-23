@@ -168,7 +168,7 @@ window.values = ''
                 if ( !filename.startsWith( 'http' ) )
                     filename = '/load.lua?filename=' + filename
                 fetch( filename )
-                    .then( response => response.text() )
+                    .then( response => { if ( response.status != 200 ) { throw 'HTTP Error : ' + response.status } else return response.text() } )
                     .then( data => { 
                         apart = data.split( "\n\n----\n\n" )
                         window.sql.update( { value: apart[0] } )
