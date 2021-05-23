@@ -48,16 +48,6 @@ const js_highlighter = (value) =>
   
   
 window.sql = new Yace( '#sql', {
-    value: `/* PRAGMA table_info( weather ); */
-    
-SELECT
-  locationId, time, AtmosphericPressure
-FROM
-  weather
-WHERE
-  time > '2004-01-01' AND
-  time < '2004-01-02' AND
-  locationId NOT IN ( 'M2', 'M4A' );`,
     styles: {
       overflow: "auto"
     },
@@ -67,38 +57,6 @@ WHERE
 window.sql.textarea.spellcheck = false;
 
 window.code = new Yace( '#code', {
-    value: `// map results into arrays by location
-var byLocation = [];
-window.values.forEach( row => {
-   if ( row[0] in byLocation ) 
-     byLocation[ row[0] ].push( { x: row[1], y: row[2] } )
-   else    
-     byLocation[ row[0] ] = [ { x: row[1], y: row[2] } ]
-} )
-
-// configure ChartJS datasets
-var datasets = [];
-for ( const [ key, value ] of Object.entries( byLocation ) ) {
-   datasets.push( {
-     data: byLocation[ key ],
-     label: key + ' (' + window.locations[ key ].name + ')',
-     borderColor: window.locations[ key ].colour,
-     fill: false
-   } )
-}
-
-window.chart = new Chart( document.getElementById( 'chart' ), {
-  type: 'line',
-  data: {
-    datasets: datasets
-  },
-  options: {
-    responsive: true,
-    maintainAspectRatio: false
-  }
-} )
-
-`,
     styles: {
       overflow: "auto"
     },
@@ -107,39 +65,38 @@ window.chart = new Chart( document.getElementById( 'chart' ), {
 } );
 window.code.textarea.spellcheck = false;
 
-
   
 </script>
 
 <script src='/lib/sql/sql-wasm.js'></script>
 <script>initSqlJs( { locateFile: filename => `/lib/sql/${filename}` } ).then( function( SQL ) {
 
-var xhr = new XMLHttpRequest();
+var xhr = new XMLHttpRequest()
 
-xhr.open( 'GET', 'database.sqlite', true);
-xhr.responseType = 'arraybuffer';
+xhr.open( 'GET', 'database.sqlite', true )
+xhr.responseType = 'arraybuffer'
 
 // on successful sqlite database load
 xhr.onload = e => {
 
-    var uInt8Array = new Uint8Array( xhr.response );
+    var uInt8Array = new Uint8Array( xhr.response )
 
     // global for database access
-    window.db = new SQL.Database( uInt8Array );
+    window.db = new SQL.Database( uInt8Array )
     
     // global for location data
     var locations = db.exec( 'SELECT * FROM location' )
     window.locations = {}
     locations[0].values.forEach( row => {
         window.locations[ row[0] ] = { id: row[0], name: row[1], source: row[2], colour: row[3] }
-    } );
+    } )
     
 }
-xhr.send();
+xhr.send()
     
-// global for result after a query
-window.result = '';
-window.values = '';
+// globals for SQL results after a query
+window.result = ''
+window.values = ''
 
     
 } )</script>
