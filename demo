@@ -1,0 +1,44 @@
+/* PRAGMA table_info( weather ); */
+    
+SELECT
+  locationId, time, AtmosphericPressure
+FROM
+  weather
+WHERE
+  time > '2004-01-01' AND
+  time < '2004-01-02' AND
+  locationId NOT IN ( 'M2', 'M4A' );
+
+----
+
+// map results into arrays by location
+var byLocation = [];
+window.values.forEach( row => {
+   if ( row[0] in byLocation ) 
+     byLocation[ row[0] ].push( { x: row[1], y: row[2] } )
+   else    
+     byLocation[ row[0] ] = [ { x: row[1], y: row[2] } ]
+} )
+
+// configure ChartJS datasets
+var datasets = [];
+for ( const [ key, value ] of Object.entries( byLocation ) ) {
+   datasets.push( {
+     data: byLocation[ key ],
+     label: key + ' (' + window.locations[ key ].name + ')',
+     borderColor: window.locations[ key ].colour,
+     fill: false
+   } )
+}
+
+window.chart = new Chart( document.getElementById( 'chart' ), {
+  type: 'line',
+  data: {
+    datasets: datasets
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false
+  }
+} )
+

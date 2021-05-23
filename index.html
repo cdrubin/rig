@@ -1,0 +1,237 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+
+<link rel="stylesheet" href="/lib/prism/prism.css">
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0 0 0 0;
+}
+.top {
+    position: absolute;
+    top: 0; right: 0; left: 0; bottom: 200px;
+}
+.bottom {
+    position: absolute;
+    bottom: 0;
+    height: 200px; width: 100%;
+}
+.column { 
+    padding: 10px;
+    overflow: auto;
+    float: left;
+}
+.left {
+    height: 200px; width: 30%;
+}
+.middle {
+    height: 200px; width: 25%;
+}
+.right {
+    height: 200px; width: 45%;
+}
+</style>
+
+<script src='/lib/prism/prism.js' data-manual></script>
+<script src="/lib/chart/chart.js"></script>
+<script type="module">
+
+import Yace from './lib/yace/index.js'
+
+const sql_highlighter = (value) =>
+  Prism.highlight( value, Prism.languages.sql, "sql" );
+  
+const js_highlighter = (value) =>
+  Prism.highlight( value, Prism.languages.javascript, "javascript" );
+  
+  
+window.sql = new Yace( '#sql', {
+    value: `/* PRAGMA table_info( weather ); */
+    
+SELECT
+  locationId, time, AtmosphericPressure
+FROM
+  weather
+WHERE
+  time > '2004-01-01' AND
+  time < '2004-01-02' AND
+  locationId NOT IN ( 'M2', 'M4A' );`,
+    styles: {
+      overflow: "auto"
+    },
+    highlighter: sql_highlighter,
+    lineNumbers: true
+  } );
+window.sql.textarea.spellcheck = false;
+
+window.code = new Yace( '#code', {
+    value: `// map results into arrays by location
+var byLocation = [];
+window.values.forEach( row => {
+   if ( row[0] in byLocation ) 
+     byLocation[ row[0] ].push( { x: row[1], y: row[2] } )
+   else    
+     byLocation[ row[0] ] = [ { x: row[1], y: row[2] } ]
+} )
+
+// configure ChartJS datasets
+var datasets = [];
+for ( const [ key, value ] of Object.entries( byLocation ) ) {
+   datasets.push( {
+     data: byLocation[ key ],
+     label: key + ' (' + window.locations[ key ].name + ')',
+     borderColor: window.locations[ key ].colour,
+     fill: false
+   } )
+}
+
+window.chart = new Chart( document.getElementById( 'chart' ), {
+  type: 'line',
+  data: {
+    datasets: datasets
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false
+  }
+} )
+
+`,
+    styles: {
+      overflow: "auto"
+    },
+    highlighter: js_highlighter,
+    lineNumbers: true
+} );
+window.code.textarea.spellcheck = false;
+
+
+  
+</script>
+
+<script src='/lib/sql/sql-wasm.js'></script>
+<script>initSqlJs( { locateFile: filename => `/lib/sql/${filename}` } ).then( function( SQL ) {
+
+var xhr = new XMLHttpRequest();
+
+xhr.open( 'GET', 'database.sqlite', true);
+xhr.responseType = 'arraybuffer';
+
+// on successful sqlite database load
+xhr.onload = e => {
+
+    var uInt8Array = new Uint8Array( xhr.response );
+
+    // global for database access
+    window.db = new SQL.Database( uInt8Array );
+    
+    // global for location data
+    var locations = db.exec( 'SELECT * FROM location' )
+    window.locations = {}
+    locations[0].values.forEach( row => {
+        window.locations[ row[0] ] = { id: row[0], name: row[1], source: row[2], colour: row[3] }
+    } );
+    
+}
+xhr.send();
+    
+// global for result after a query
+window.result = '';
+window.values = '';
+
+    
+} )</script>
+</head>
+<body onLoad="load( 'demo' )">
+    <div class="top" style="background-color: darkblue">
+        <div id="load" style="color: white; position: absolute; cursor: pointer" onClick="load()">&#8689;</div>
+        <div id="save" style="color: white; float: right; cursor: pointer" onClick="save()">&#8690;</div>
+        <canvas id="chart""></canvas>
+    </div>
+    <div class="bottom">
+        <div class="left column" style="background-color: orange">
+            <div id="sql" onKeyDown="if( event.keyCode == 13 && event.ctrlKey ) query( sql.value );">
+            </div>
+        </div>
+        <div class="middle column" style="background-color: darkgreen">
+            <div id="data">
+            </div>
+            <tt id="rowcount" style="font-size: 10px; color: white; position: absolute; margin: -10px; top: 10px">
+            </tt>
+        </div>
+        <div class="right column" style="background-color: purple;">
+            <div id="code" onKeyDown="if( event.keyCode == 13 && event.ctrlKey ) graph( code.value );">
+            </div>
+            <input id="auto" type="checkbox" style="font-size: 10px; color: white; position: absolute; margin: -10px; top: 10px">
+            </input>
+       </div>
+    </div>
+
+    <script>
+        function query( sql ) {
+            let rowcount = document.getElementById( 'rowcount' )
+            
+            rowcount.innerHTML = 'running...';
+            setTimeout( () => {
+                try {
+                    window.result = db.exec( sql );
+                    window.values = window.result[0].values;
+                    
+                    // display up to 10 rows of returned data
+                    var data_slice = JSON.stringify( window.values.slice( 0, 10 ) );
+                    var row_count = window.values.length;
+                    if ( row_count > 10 ) data_slice = data_slice.replace(/.$/,",...]")
+                    
+                    document.getElementById( 'data' ).innerHTML = Prism.highlight( data_slice, Prism.languages.json, 'json' );
+                    rowcount.innerHTML =  window.values.length;
+                    
+                    // if auto-execute code is selected then re-run graph()
+                    if ( document.getElementById( 'auto' ).checked )
+                        graph( code.value )
+                }
+                catch ( e ) { document.getElementById( 'rowcount' ).innerHTML =  ''; alert( e ) }
+
+            }, 10 );
+        }
+        
+        function graph( code ) {
+            try {
+                if( window.hasOwnProperty( 'chart' ) ) window.chart.destroy();
+                eval( code );
+            }
+            catch( e ) { alert( 'Error: ' + e + ' :' + e.lineNumber + '' ) }
+        }
+        
+        function load( filename = '' ) {
+            if ( filename == '' )
+                var filename = prompt( 'Load :' )
+            if ( filename != '' && filename != null ) {
+                if ( !filename.startsWith( 'http' ) )
+                    filename = '/load.lua?filename=' + filename
+                fetch( filename )
+                    .then( response => response.text() )
+                    .then( data => { 
+                        apart = data.split( "\n\n----\n\n" )
+                        window.sql.update( { value: apart[0] } )
+                        window.code.update( { value: apart[1] } )
+                    } )
+                    .catch( error => alert( error ) )
+            }
+        }
+        
+        function save() {
+            var filename = prompt( 'Save filename: ', '' )
+            if ( filename != '' && filename != null ) {
+                var to_save = window.sql.value + "\n\n----\n\n" + window.code.value 
+                var xhr = new XMLHttpRequest();
+                xhr.open( 'PUT', '/save.lua?filename=' + filename, true )
+                xhr.send( to_save )
+            }
+        }
+        
+    </script>
+    
+</body>
+</html>
