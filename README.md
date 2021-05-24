@@ -10,8 +10,18 @@ The code here is ___NOT___ intended to be an example of best-practice in Javascr
 
 ![user interface](https://user-images.githubusercontent.com/232306/119274102-47fe9d00-bbdc-11eb-929a-a846bd5e3ac7.png)
 
-> This is a truly poorly accessible web application, if anyone is interested in better access please reach out - I'm super happy to help.
+> This is a poorly accessible web application, if anyone is interested in better access please reach out - I'm super happy to help.
 
+---
+### Install
+
+1. Download the latest [rig.com](https://github.com/cdrubin/rig/releases/download/1.0/rig.com) APE 
+2. Make ```rig.com``` executable according to your platform
+3. Run it (a new browser window should open to http://localhost:8080)
+
+> To be sure the story involves trusting that this executable will do nothing untoward. If you on are a Mac you will need to explicitly verify that you are okay with execution by visiting ```System Preferences```|```General``` and pressing the ```Allow Anyway``` button next to the message about rig.com coming from the untamed wilds. 
+
+---
 ### Usage 
 
 🟠 The ```SQL``` (in orange!) pane accepts queries against the in-memory DB. ```CTRL-Enter``` executes these. 
