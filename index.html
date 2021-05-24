@@ -17,12 +17,23 @@
       h4 {
         text-align: right;
       }
+      .front {
+        background: center/330% url(https://user-images.githubusercontent.com/232306/119274102-47fe9d00-bbdc-11eb-929a-a846bd5e3ac7.png);
+        color: white;
+      }
+      .front h1 {
+        font-size: 130px;
+      }
+      .front a {
+        color: grey;
+      }
+      
     </style>
   </head>
   <body>
     <textarea id="source">
 
-class: center, middle
+class: center, middle, front
 
 # rig
 
@@ -56,7 +67,7 @@ and fit the needs of the user first!
 
 
 
-#### _the landscape_
+#### _development philosopy_
 
       - size does still matter
       - the Node ecosystem of modules is brittle and bundles are outsized
@@ -69,14 +80,13 @@ and fit the needs of the user first!
       - modern Javascript and libraries without bundling or CDN-based modules
       - minimal proof-of-concept that is fun!
       - αcτµαlly pδrταblε εxεcµταblε
-      - where can this technology go?
       
 ---
       
 # technology choices
 
 #### _backend_
-      - cosmopolitan libc and redbean web server
+      - cosmopolitan libc's redbean web server APE
       - Lua
       - sqlite (not this version...)
 
@@ -90,8 +100,7 @@ and fit the needs of the user first!
 #### _frontend_
       
       - simple HTML, CSS and Javascript
-      - sqlite
-      - sql.js wasm
+      - sqlite as sql.js wasm
       - yet-another-code-editor (yace)
       - prism.js
       - chart.js
@@ -106,10 +115,10 @@ and fit the needs of the user first!
 #### _backend_
 
       - sqlite csv import and basic renaming
-      - compiled redbean
-      - open local browser window to http://localhost:8080 when executed
+      - redbean 1.0
+      - .init.lua launches local browser window to http://localhost:8080
       - load.lua and save.lua handlers
-      - files appended to rig.com zipfile
+      - all files appended to rig.com zipfile for distribution
 
 #### _frontend_
 
