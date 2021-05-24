@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>My Awesome Presentation</title>
+    <title>rig: redbean-interactive-grapher</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <style type="text/css">
       @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
       @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
       @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
 
-      body { font-family: 'Droid Serif'; }
+      body, li { font-family: 'Droid Serif'; }
       h1, h2, h3 {
         font-family: 'Yanone Kaffeesatz';
         font-weight: normal;
       }
       .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+      h4 {
+        text-align: right;
+      }
     </style>
   </head>
   <body>
@@ -23,7 +26,10 @@ class: center, middle
 
 # rig
 
-### readbean-interactive-grapher
+![redbean](https://user-images.githubusercontent.com/232306/119369453-2fe15900-bc82-11eb-8128-6e7a23c7253e.png)
+![chartjs](https://user-images.githubusercontent.com/232306/119369853-a2eacf80-bc82-11eb-9e07-35bda364344d.png)
+
+#### _redbean interactive grapher_
 
 ???
 
@@ -31,27 +37,93 @@ Notes for the _first_ slide!
 
 ---
 
-# Agenda
+# agenda
 
-1. Introduction
-2. Survey of tools and needs
-3. Looking for automation
-4. Creating an accessible and secure workflow
-
----
-
-# Introduction
-
-      It's possible to embed images.
-![](https://cdn.shopify.com/s/files/1/0051/4802/products/mona-1_large.jpg?v=1511308586)
+      1. introduction
+      2. technology choices
+      3. implementation details
+      4. demo
+      5. github access
+      6. data insights
 
 ---
 
-# Survey of tools and needs
+# introduction
+
+Systems for local use do not need to be Internet scale. The best are reliable, long-lived, easy to deploy and maintain, 
+and fit the needs of the user first!
+
+
+
+#### _the landscape_
+
+      - size does still matter
+      - the Node ecosystem of modules is brittle and bundles are outsized
+      - "no need to ship me another browser when i have my own already, thank you!"
+      - docker containers are many layers* of abstraction for repeatability
+      - if i cannot reuse &#9842; repeatability is needed
+
+#### _learning something new_
+
+      - modern Javascript and libraries without bundling or CDN-based modules
+      - minimal proof-of-concept that is fun!
+      - αcτµαlly pδrταblε εxεcµταblε
+      - where can this technology go?
+      
+---
+      
+# technology choices
+
+#### _backend_
+      - cosmopolitan libc and redbean web server
+      - Lua
+      - sqlite (not this version...)
+
+![linux](https://user-images.githubusercontent.com/232306/119369515-438cbf80-bc82-11eb-9c54-2b2f78038377.png)
+![windows](https://user-images.githubusercontent.com/232306/119369532-4982a080-bc82-11eb-8695-7bf85647002b.png)
+![mac](https://user-images.githubusercontent.com/232306/119369565-50111800-bc82-11eb-96dd-59387228b713.png)
+![freebsd](https://user-images.githubusercontent.com/232306/119369586-556e6280-bc82-11eb-871a-725012ea7caa.png)
+![netbsd](https://user-images.githubusercontent.com/232306/119369607-5bfcda00-bc82-11eb-98fc-5f0240778f86.png)
+      
+      
+#### _frontend_
+      
+      - simple HTML, CSS and Javascript
+      - sqlite
+      - sql.js wasm
+      - yet-another-code-editor (yace)
+      - prism.js
+      - chart.js
+      
+      
+      
+      
+---
+
+# implementation details
+
+#### _backend_
+
+      - sqlite csv import and basic renaming
+      - compiled redbean
+      - open local browser window to http://localhost:8080 when executed
+      - load.lua and save.lua handlers
+      - files appended to rig.com zipfile
+
+#### _frontend_
+
+      - vanilla Javascript
+      - global variables!
+      - inline CSS and event handlers
+      - locally sourced non-minified Javascript libraries
+      - load sqlite database into browser memory on load
+      - load demo script file on load
+      - execute SQL to populate data variables
+      - execute Javascript to draw the chart
 
 ---
 
-# Looking for automation
+# demo
 
 ---
 
