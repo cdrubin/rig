@@ -10,7 +10,7 @@ The code here is ___NOT___ intended to be an example of best-practice in Javascr
 
 ![user interface](https://user-images.githubusercontent.com/232306/119274102-47fe9d00-bbdc-11eb-929a-a846bd5e3ac7.png)
 
-> This is a truly poorly accessible web application, if anyone is interested for better access please reach out - I'm happy to help.
+> This is a truly poorly accessible web application, if anyone is interested in better access please reach out - I'm super happy to help.
 
 ### Usage 
 
