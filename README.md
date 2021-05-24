@@ -1,5 +1,5 @@
 
-# _rig_    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   ([redbean](https://justine.lol/redbean/)-interactive-[grapher](https://www.chartjs.org/))   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     [&RightTriangleBar;](https://cdrubin.github.io/rig)
+# 📈 _rig_    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   ([redbean](https://justine.lol/redbean/)-interactive-[grapher](https://www.chartjs.org/))   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     [&RightTriangleBar;](https://cdrubin.github.io/rig)
 ---
 
 (This proof-of-concept was intended for single-use but it is made public here in case others might be interested!)
