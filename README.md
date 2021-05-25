@@ -4,7 +4,7 @@
 
 (This proof-of-concept was intended for single-use but it is made public here in case others might be interested!)
 
-The code here is ___NOT___ intended to be an example of best-practice in Javascript, Lua or the use of [αcτµαlly pδrταblε εxεcµταblεs and redbean](https://justine.lol/ape.html). It uses garish colours specifically because the intent is for others to make modifications! All of the source code is to be found within [index.html](https://github.com/cdrubin/rig/blob/main/index.html) - no external CSS or Javascript, no Javascript framework even though I itched to find an excuse to use [Hyperapp](https://github.com/jorgebucaran/hyperapp). This was really an opportunity to play with what an APE webapp means! 
+The code here is ___NOT___ intended to be an example of best-practice in Javascript, Lua or the use of [αcτµαlly pδrταblε εxεcµταblεs and redbean](https://justine.lol/ape.html). It uses garish colours specifically because the intent is for others to make modifications! All of the source code is to be found within [index.html](https://github.com/cdrubin/rig/blob/main/index.html) - no external CSS or Javascript, no Javascript framework even though I itched to find an excuse to use [Hyperapp](https://github.com/jorgebucaran/hyperapp). This was really an opportunity to play with what an ape webapp means! 
 
 [SQLite](SQLite) in the browser comes thanks to [SQL.js](https://github.com/sql-js/sql.js). Code highlighting thanks to [Prism](https://prismjs.com/) and [Yace](https://github.com/petersolopov/yace). 
 
@@ -15,7 +15,7 @@ The code here is ___NOT___ intended to be an example of best-practice in Javascr
 ---
 ### Install
 
-1. Download the latest [rig.com](https://github.com/cdrubin/rig/releases/download/0.1/rig.com) APE 
+1. Download the latest [rig.com](https://github.com/cdrubin/rig/releases/download/0.1/rig.com) ape 
 2. Make ```rig.com``` executable according to your platform
 3. Run it (a new browser window should open to http://localhost:8080)
 
