@@ -15,7 +15,7 @@ The code here is ___NOT___ intended to be an example of best-practice in Javascr
 ---
 ### Install
 
-1. Download the latest [rig.com](https://github.com/cdrubin/rig/releases/download/1.0/rig.com) APE 
+1. Download the latest [rig.com](https://github.com/cdrubin/rig/releases/download/0.1/rig.com) APE 
 2. Make ```rig.com``` executable according to your platform
 3. Run it (a new browser window should open to http://localhost:8080)
 
