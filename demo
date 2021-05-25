@@ -37,6 +37,14 @@ window.chart = new Chart( document.getElementById( 'chart' ), {
     datasets: datasets
   },
   options: {
+    scales: {
+      x: { type: 'time' }
+    },
+    layout: {
+      padding: {
+        bottom: 15
+      }
+    }, 
     responsive: true,
     maintainAspectRatio: false
   }
