@@ -38,7 +38,7 @@ window.chart = new Chart( document.getElementById( 'chart' ), {
   },
   options: {
     scales: {
-      x: { type: 'time' }
+      x: { type: 'time', time: { unit: 'hour' } }
     },
     layout: {
       padding: {
